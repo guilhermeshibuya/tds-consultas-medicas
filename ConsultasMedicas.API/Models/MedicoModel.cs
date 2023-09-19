@@ -20,7 +20,7 @@ namespace ConsultasMedicas.API.Models
         //[Required(ErrorMessage = "A especialidade é obrigatória")]
         public int? IdEspecialidade { get; set; }
         
-        public EspecialidadeModel? Especialidade { get; set; }
+        //public EspecialidadeModel? Especialidade { get; set; }
 
         [Required(ErrorMessage = "O CRM é obrigatório")]
         [RegularExpression(@"^[A-Z]{2}-\d{5}$")]

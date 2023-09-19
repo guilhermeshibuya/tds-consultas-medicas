@@ -61,10 +61,12 @@ namespace ConsultasMedicas.API.Data
                 .WithOne(c => c.Paciente)
                 .HasForeignKey("IdPaciente");
 
+            /*
             modelBuilder.Entity<MedicoModel>()
                 .HasOne(m => m.Especialidade)
                 .WithMany(e => e.Medicos)
                 .HasForeignKey(m => m.IdEspecialidade);
+            */
             /*
             modelBuilder.Entity<EspecialidadeModel>()
                 .HasMany(e => e.Medicos)

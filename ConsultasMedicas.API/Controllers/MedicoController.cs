@@ -14,7 +14,18 @@ namespace ConsultasMedicas.API.Controllers
             [FromServices] AppDbContext context
         )
         {
-            var medicos = await context.Medicos.ToListAsync();
+            //var medicos = await context.Medicos.ToListAsync();
+            var medicos = await context.Medicos
+                .Join(
+                    context.Especialidades,
+                    medico => medico.IdEspecialidade,
+                    especialidade => especialidade.IdEspecialidade,
+                    (medico, especialidade) => new
+                    {
+                        Medico = medico,
+                        Especialidade = especialidade
+                    })
+                .ToListAsync();
 
             if (medicos == null) return NotFound();
 
@@ -36,17 +47,10 @@ namespace ConsultasMedicas.API.Controllers
 
         [HttpPost]
         public async Task<IActionResult> PostAsync(
-            int idEspecialidade,
             [FromBody] MedicoModel medico,
             [FromServices] AppDbContext context
         )
-        { 
-            var especialidade = await context.Especialidades.FindAsync(idEspecialidade);
-
-            if (especialidade == null) return NotFound();
-            
-            medico.Especialidade = especialidade;
-            
+        {    
             context.Medicos.Add(medico);
 
             var result = await context.SaveChangesAsync();
@@ -94,7 +98,7 @@ namespace ConsultasMedicas.API.Controllers
             if (medicoToUpdate == null) return NotFound();
 
             medicoToUpdate.Nome = medico.Nome;
-            medicoToUpdate.Especialidade = medico.Especialidade;
+            //medicoToUpdate.Especialidade = medico.Especialidade;
             medicoToUpdate.CRM = medico.CRM;
             //medicoToUpdate.HorariosDisponiveis = medico.HorariosDisponiveis;
             medicoToUpdate.Consultas = medico.Consultas;
