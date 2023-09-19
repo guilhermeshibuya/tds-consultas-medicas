@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using ConsultasMedicas.API.Attributes;
 
 namespace ConsultasMedicas.API.Models
@@ -16,7 +17,9 @@ namespace ConsultasMedicas.API.Models
             ErrorMessage = "O nome deve ter no mínimo 2 letras")]
         public string? Nome { get; set; }
 
-        [Required(ErrorMessage = "A especialidade é obrigatória")]
+        //[Required(ErrorMessage = "A especialidade é obrigatória")]
+        public int? IdEspecialidade { get; set; }
+        
         public EspecialidadeModel? Especialidade { get; set; }
 
         [Required(ErrorMessage = "O CRM é obrigatório")]
@@ -26,7 +29,7 @@ namespace ConsultasMedicas.API.Models
         [DisplayName("Horários Disponíveis")]
         [DisplayFormat(DataFormatString = "{dd/MM/yyyy HH:mm}")]
         [DateTimeValidator(ErrorMessage = "A data não pode ser no passado")]
-        public List<DateTime>? HorariosDisponiveis { get; set; }
+        public List<HorarioModel>? HorariosDisponiveis { get; set; }
 
         [DisplayName("Consultas Agendadas")]
         public List<ConsultaModel>? Consultas { get; set; }

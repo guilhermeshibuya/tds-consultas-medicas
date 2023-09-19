@@ -1,6 +1,5 @@
 ﻿using ConsultasMedicas.API.Data;
 using ConsultasMedicas.API.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,18 +7,18 @@ namespace ConsultasMedicas.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class PacienteController : ControllerBase
+    public class EspecialidadeController : ControllerBase
     {
         [HttpGet]
         public async Task<IActionResult> GetAsync(
             [FromServices] AppDbContext context
         )
         {
-            var pacientes = await context.Pacientes.ToListAsync();
+            var especialidades = await context.Especialidades.ToListAsync();
 
-            if (pacientes == null) return NotFound();
-
-            return Ok(pacientes);
+            if (especialidades == null) return NotFound();
+            
+            return Ok(especialidades);
         }
 
         [HttpGet("{id:int}")]
@@ -28,52 +27,49 @@ namespace ConsultasMedicas.API.Controllers
             [FromServices] AppDbContext context
         )
         {
-            var paciente = await context.Pacientes.FindAsync(id);
+            var especialidade = await context.Especialidades.FindAsync(id);
 
-            if (paciente == null) return NotFound();
+            if (especialidade == null) return NotFound();
 
-            return Ok(paciente);
+            return Ok(especialidade);
         }
 
         [HttpPost]
         public async Task<IActionResult> PostAsync(
-            [FromBody] PacienteModel paciente,
+            [FromBody] EspecialidadeModel especialidade,
             [FromServices] AppDbContext context
         )
         {
-            context.Pacientes.Add(paciente);
-            
+            context.Especialidades.Add(especialidade);
+
             var result = await context.SaveChangesAsync();
 
             if (result == 0) return BadRequest();
 
-            return Created($"/{paciente.IdPaciente}", paciente);
+            return Created($"/{especialidade.IdEspecialidade}", especialidade);
         }
 
         [HttpPut("{id:int}")]
         public async Task<IActionResult> PutAsync(
             [FromRoute] int id,
-            [FromBody] PacienteModel paciente,
+            [FromBody] EspecialidadeModel especialidade,
             [FromServices] AppDbContext context
         )
         {
-            var pacienteToUpdate = await context.Pacientes.FindAsync(id);
+            var especialidadeToUpdate = await context.Especialidades.FindAsync(id);
 
-            if (pacienteToUpdate == null) return NotFound();
+            if (especialidadeToUpdate == null) return NotFound();
 
-            pacienteToUpdate.Nome = paciente.Nome;
-            pacienteToUpdate.Sobrenome = paciente.Sobrenome;
-            pacienteToUpdate.CPF = paciente.CPF;
-            pacienteToUpdate.HistoricoMedico = paciente.HistoricoMedico;
-            pacienteToUpdate.Consultas = paciente.Consultas;
+            especialidadeToUpdate.NomeEspecialidade = especialidade.NomeEspecialidade;
+            especialidadeToUpdate.Descricao = especialidade.Descricao;
 
-            context.Pacientes.Update(pacienteToUpdate);
+            context.Especialidades.Update(especialidadeToUpdate);
 
             var result = await context.SaveChangesAsync();
 
             if (result == 0) return BadRequest();
 
-            return Ok(pacienteToUpdate);
+            return Ok(result);
         }
 
         [HttpDelete("{id:int}")]
@@ -82,17 +78,17 @@ namespace ConsultasMedicas.API.Controllers
             [FromServices] AppDbContext context
         )
         {
-            var pacienteToDelete = await context.Pacientes.FindAsync(id);
+            var especialidadeToRemove = await context.Especialidades.FindAsync(id);
 
-            if (pacienteToDelete == null) return NotFound();
+            if (especialidadeToRemove == null) return NotFound();
 
-            context.Pacientes.Remove(pacienteToDelete);
+            context.Especialidades.Remove(especialidadeToRemove);
 
             var result = await context.SaveChangesAsync();
 
             if (result == 0) return BadRequest();
 
-            return Ok(pacienteToDelete);
+            return Ok(result);
         }
     }
 }

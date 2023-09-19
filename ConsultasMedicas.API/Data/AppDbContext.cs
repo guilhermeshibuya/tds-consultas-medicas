@@ -17,7 +17,7 @@ namespace ConsultasMedicas.API.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("DataSource=tds.db,Cache=Shared");
+            optionsBuilder.UseSqlite("DataSource=tds.db;Cache=Shared");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -28,6 +28,10 @@ namespace ConsultasMedicas.API.Data
 
             modelBuilder.Entity<MedicoModel>().HasKey(m => m.IdMedico);
             modelBuilder.Entity<MedicoModel>().Property(m => m.IdMedico)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<HorarioModel>().HasKey(h => h.IdHorario);
+            modelBuilder.Entity<HorarioModel>().Property(h => h.IdHorario)
                 .ValueGeneratedOnAdd();
 
             modelBuilder.Entity<RecepcionistaModel>().HasKey(r => r.IdRecepcionista);
@@ -44,20 +48,33 @@ namespace ConsultasMedicas.API.Data
 
             modelBuilder.Entity<MedicoModel>()
                 .HasMany(m => m.Consultas)
-                .WithOne();
+                .WithOne(c => c.Medico)
+                .HasForeignKey("IdMedico");
+
+            modelBuilder.Entity<MedicoModel>()
+                .HasMany(m => m.HorariosDisponiveis)
+                .WithOne(h => h.Medico)
+                .HasForeignKey("IdMedico");
 
             modelBuilder.Entity<PacienteModel>()
                 .HasMany(p => p.Consultas)
-                .WithOne();
+                .WithOne(c => c.Paciente)
+                .HasForeignKey("IdPaciente");
 
             modelBuilder.Entity<MedicoModel>()
                 .HasOne(m => m.Especialidade)
                 .WithMany(e => e.Medicos)
-                .HasForeignKey(m => m.Especialidade!.IdEspecialidade);
+                .HasForeignKey(m => m.IdEspecialidade);
+            /*
+            modelBuilder.Entity<EspecialidadeModel>()
+                .HasMany(e => e.Medicos)
+                .WithOne(m => m.Especialidade)
+                .HasForeignKey("IdEspecialidade");*/
 
             modelBuilder.Entity<RecepcionistaModel>()
                 .HasMany(r => r.ConsultasAgendadas)
-                .WithOne(c => c.Recepcionista);
+                .WithOne(c => c.Recepcionista)
+                .HasForeignKey("IdRecepcionista");
         }
     }
 }

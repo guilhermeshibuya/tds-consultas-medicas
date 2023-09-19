@@ -9,7 +9,7 @@ namespace ConsultasMedicas.API.Controllers
     [Route("api/[controller]")]
     public class MedicoController : ControllerBase
     {
-        [HttpGet("/")]
+        [HttpGet]
         public async Task<IActionResult> GetAsync(
             [FromServices] AppDbContext context
         )
@@ -21,25 +21,32 @@ namespace ConsultasMedicas.API.Controllers
             return Ok(medicos);
         }
 
-        [HttpGet("/{id:int}")]
+        [HttpGet("{id:int}")]
         public async Task<IActionResult> GetByIdAsync(
             [FromRoute] int id,
             [FromServices] AppDbContext context
         )
         {
-            var medico = await context.Medicos.FirstOrDefaultAsync(x => x.IdMedico == id);
+            var medico = await context.Medicos.FindAsync(id);
 
             if (medico == null) return NotFound();
 
             return Ok(medico);
         }
 
-        [HttpPost("/")]
+        [HttpPost]
         public async Task<IActionResult> PostAsync(
+            int idEspecialidade,
             [FromBody] MedicoModel medico,
             [FromServices] AppDbContext context
         )
-        {
+        { 
+            var especialidade = await context.Especialidades.FindAsync(idEspecialidade);
+
+            if (especialidade == null) return NotFound();
+            
+            medico.Especialidade = especialidade;
+            
             context.Medicos.Add(medico);
 
             var result = await context.SaveChangesAsync();
@@ -49,22 +56,50 @@ namespace ConsultasMedicas.API.Controllers
             return Created($"/{medico.IdMedico}", medico);
         }
 
-        [HttpPut("/{id:int}")]
+        [HttpPost("{id:int}/horarios-disponiveis")]
+        public async Task<IActionResult> PostAsync(
+            [FromRoute] int id,
+            [FromBody] DateTime horario,
+            [FromServices] AppDbContext context
+        )
+        {
+            var medico = await context.Medicos.FindAsync(id);
+
+            if (medico == null) return NotFound();
+
+            var horarioDisponivel = new HorarioModel
+            {
+                Medico = medico,
+                HorarioDisponivel = horario
+            };
+
+            medico.HorariosDisponiveis!.Add(horarioDisponivel);
+
+            var result = await context.SaveChangesAsync();
+
+            if (result == 0) return BadRequest();
+
+            return Created($"/{id}/horarios-disponiveis", horarioDisponivel);
+        }
+
+        [HttpPut("{id:int}")]
         public async Task<IActionResult> PutAsync(
             [FromRoute] int id,
             [FromBody] MedicoModel medico,
             [FromServices] AppDbContext context
         )
         {
-            var medicoToUpdate = await context.Medicos.FirstOrDefaultAsync(x => x.IdMedico == id);
+            var medicoToUpdate = await context.Medicos.FindAsync(id);
 
             if (medicoToUpdate == null) return NotFound();
 
             medicoToUpdate.Nome = medico.Nome;
             medicoToUpdate.Especialidade = medico.Especialidade;
             medicoToUpdate.CRM = medico.CRM;
-            medicoToUpdate.HorariosDisponiveis = medico.HorariosDisponiveis;
+            //medicoToUpdate.HorariosDisponiveis = medico.HorariosDisponiveis;
             medicoToUpdate.Consultas = medico.Consultas;
+
+            context.Medicos.Update(medicoToUpdate);
 
             var result = await context.SaveChangesAsync();
 
@@ -73,13 +108,13 @@ namespace ConsultasMedicas.API.Controllers
             return Ok(medicoToUpdate);
         }
 
-        [HttpDelete("/{id:int}")]
+        [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteAsync(
             [FromRoute] int id,
             [FromServices] AppDbContext context
         )
         {
-            var medicoToDelete = await context.Medicos.FirstOrDefaultAsync(x => x.IdMedico == id);
+            var medicoToDelete = await context.Medicos.FindAsync(id);
 
             if (medicoToDelete == null) return NotFound();
 

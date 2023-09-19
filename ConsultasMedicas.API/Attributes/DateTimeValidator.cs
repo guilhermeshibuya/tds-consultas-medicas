@@ -11,6 +11,8 @@ namespace ConsultasMedicas.API.Attributes
                 date = Convert.ToDateTime(value);
                 return date >= DateTime.Now;
             }
+            if (value is null) return true;
+
             return false;
         }
     }
