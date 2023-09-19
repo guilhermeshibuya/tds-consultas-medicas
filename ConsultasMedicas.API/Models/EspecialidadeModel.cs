@@ -21,8 +21,5 @@ namespace ConsultasMedicas.API.Models
         [Required(AllowEmptyStrings = false,
             ErrorMessage = "A descrição é obrigatória")]
         public string? Descricao { get; set; }
-
-        [DisplayName("Médicos")]
-        public List<MedicoModel>? Medicos { get; set; }
     }
 }
