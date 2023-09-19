@@ -14,7 +14,6 @@ namespace ConsultasMedicas.API.Controllers
             [FromServices] AppDbContext context
         )
         {
-            //var medicos = await context.Medicos.ToListAsync();
             var medicos = await context.Medicos
                 .Join(
                     context.Especialidades,
@@ -38,7 +37,19 @@ namespace ConsultasMedicas.API.Controllers
             [FromServices] AppDbContext context
         )
         {
-            var medico = await context.Medicos.FindAsync(id);
+            //var medico = await context.Medicos.FindAsync(id);
+            var medico = await context.Medicos
+                .Where(m => m.IdMedico == id)
+                .Join(
+                    context.Especialidades,
+                    medico => medico.IdEspecialidade,
+                    especialidade => especialidade.IdEspecialidade,
+                    (medico, especialidade) => new
+                    {
+                        Medico = medico,
+                        Especialidade = especialidade
+                    })
+                .FirstOrDefaultAsync();
 
             if (medico == null) return NotFound();
 

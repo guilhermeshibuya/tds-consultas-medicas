@@ -45,7 +45,7 @@ namespace ConsultasMedicas.API.Data
             modelBuilder.Entity<ConsultaModel>().HasKey(c => c.IdConsulta);
             modelBuilder.Entity<ConsultaModel>().Property(c => c.IdConsulta)
                 .ValueGeneratedOnAdd();
-
+            /*
             modelBuilder.Entity<MedicoModel>()
                 .HasMany(m => m.Consultas)
                 .WithOne(c => c.Medico)
@@ -60,7 +60,7 @@ namespace ConsultasMedicas.API.Data
                 .HasMany(p => p.Consultas)
                 .WithOne(c => c.Paciente)
                 .HasForeignKey("IdPaciente");
-
+            */
             /*
             modelBuilder.Entity<MedicoModel>()
                 .HasOne(m => m.Especialidade)
@@ -72,11 +72,12 @@ namespace ConsultasMedicas.API.Data
                 .HasMany(e => e.Medicos)
                 .WithOne(m => m.Especialidade)
                 .HasForeignKey("IdEspecialidade");*/
-
+            /*
             modelBuilder.Entity<RecepcionistaModel>()
                 .HasMany(r => r.ConsultasAgendadas)
                 .WithOne(c => c.Recepcionista)
                 .HasForeignKey("IdRecepcionista");
+            */
         }
     }
 }
