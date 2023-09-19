@@ -12,10 +12,10 @@ namespace ConsultasMedicas.API.Models
 
         [DisplayName("Médico")]
         [Required(ErrorMessage = "O médico é obrigatório")]
-        public MedicoModel? Medico { get; set; }
+        public int? IdMedico { get; set; }
 
         [Required(ErrorMessage = "O paciente é obrigatório")]
-        public PacienteModel? Paciente { get; set; }
+        public int? IdPaciente { get; set; }
 
         [DisplayName("Data")]
         [Required(ErrorMessage = "A data e a hora são obrigatórias")]
@@ -30,6 +30,6 @@ namespace ConsultasMedicas.API.Models
             ErrorMessage = "As observações são obrigatórias")]
         public string? Observacoes { get; set; }
 
-        public RecepcionistaModel? Recepcionista { get; set; }
+        public int? IdRecepcionista { get; set; }
     }
 }

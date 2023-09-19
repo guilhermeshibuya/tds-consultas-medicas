@@ -7,63 +7,67 @@ namespace ConsultasMedicas.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class EspecialidadeController : ControllerBase
+    public class ConsultaController : ControllerBase
     {
-        [HttpGet]
+        [HttpGet]//Mostra todas as consulta
         public async Task<IActionResult> GetAsync(
             [FromServices] AppDbContext context
         )
         {
-            var especialidades = await context.Especialidades.ToListAsync();
+            var consulta = await context.Consultas.ToListAsync();
 
-            if (especialidades == null) return NotFound();
+            if (consulta == null) return NotFound();
             
-            return Ok(especialidades);
+            return Ok(consulta);
         }
 
-        [HttpGet("{id:int}")]
+        [HttpGet("{id:int}")]//Mostra consulta expecifica
         public async Task<IActionResult> GetByIdAsync(
             [FromRoute] int id,
             [FromServices] AppDbContext context
         )
         {
-            var especialidade = await context.Especialidades.FindAsync(id);
+            var consulta = await context.Consultas.FindAsync(id);
 
-            if (especialidade == null) return NotFound();
+            if (consulta == null) return NotFound();
 
-            return Ok(especialidade);
+            return Ok(consulta);
         }
 
-        [HttpPost]
+        [HttpPost]//Cadastra uma consulta
         public async Task<IActionResult> PostAsync(
-            [FromBody] EspecialidadeModel especialidade,
+            [FromBody] ConsultaModel consulta,
             [FromServices] AppDbContext context
         )
         {
-            context.Especialidades.Add(especialidade);
+            context.Consultas.Add(consulta);
 
             var result = await context.SaveChangesAsync();
 
             if (result == 0) return BadRequest();
 
-            return Created($"/{especialidade.IdEspecialidade}", especialidade);
+            return Created($"/{consulta.IdConsulta}", consulta);
         }
 
-        [HttpPut("{id:int}")]
+        [HttpPut("{id:int}")]//Atualiza a Consulta
         public async Task<IActionResult> PutAsync(
             [FromRoute] int id,
-            [FromBody] EspecialidadeModel especialidade,
+            [FromBody] ConsultaModel consulta,
             [FromServices] AppDbContext context
         )
         {
-            var especialidadeToUpdate = await context.Especialidades.FindAsync(id);
+            var consultaToUpdate = await context.Consultas.FindAsync(id);
 
-            if (especialidadeToUpdate == null) return NotFound();
+            if (consultaToUpdate == null) return NotFound();
 
-            especialidadeToUpdate.NomeEspecialidade = especialidade.NomeEspecialidade;
-            especialidadeToUpdate.Descricao = especialidade.Descricao;
+            consultaToUpdate.IdMedico = consulta.IdMedico;
+            consultaToUpdate.IdPaciente = consulta.IdPaciente;
+            consultaToUpdate.DataHoraConsulta = consulta.DataHoraConsulta;
+            consultaToUpdate.TipoConsulta = consulta.TipoConsulta;
+            consultaToUpdate.Observacoes = consulta.Observacoes;
+            consultaToUpdate.IdRecepcionista = consulta.IdRecepcionista;
 
-            context.Especialidades.Update(especialidadeToUpdate);
+            context.Consultas.Update(consultaToUpdate);
 
             var result = await context.SaveChangesAsync();
 
@@ -72,17 +76,17 @@ namespace ConsultasMedicas.API.Controllers
             return Ok(result);
         }
 
-        [HttpDelete("{id:int}")]
+        [HttpDelete("{id:int}")]//Deleta a consulta
         public async Task<IActionResult> DeleteAsync(
             [FromRoute] int id,
             [FromServices] AppDbContext context
         )
         {
-            var especialidadeToRemove = await context.Especialidades.FindAsync(id);
+            var consultaToRemove = await context.Consultas.FindAsync(id);
 
-            if (especialidadeToRemove == null) return NotFound();
+            if (consultaToRemove == null) return NotFound();
 
-            context.Especialidades.Remove(especialidadeToRemove);
+            context.Consultas.Remove(consultaToRemove);
 
             var result = await context.SaveChangesAsync();
 
