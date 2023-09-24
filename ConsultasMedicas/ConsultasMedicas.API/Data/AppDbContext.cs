@@ -41,7 +41,7 @@ namespace ConsultasMedicas.API.Data
                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<MedicoModel>()
-                .HasMany(m => Consultas)
+                .HasMany(m => m.Consultas)
                 .WithOne(c => c.Medico)
                 .HasForeignKey(c => c.MedicoId)
                 .OnDelete(DeleteBehavior.Restrict);
