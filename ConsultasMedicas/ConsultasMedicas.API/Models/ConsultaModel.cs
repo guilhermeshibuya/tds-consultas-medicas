@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Healthy.Domain.Enums;
 
 
 namespace ConsultasMedicas.API.Models;
@@ -12,7 +11,7 @@ public class ConsultaModel
     [Display(Name = "Data e hora da consulta")]
     [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}", ApplyFormatInEditMode = true)]
     [DataType(DataType.DateTime, ErrorMessage = "Data inválida")]
-    s
+    
     public DateTime Data { get; set; }
 
     [Display(Name = "Criado em")]
