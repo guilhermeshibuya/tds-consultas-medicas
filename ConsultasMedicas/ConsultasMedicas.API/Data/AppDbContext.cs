@@ -15,6 +15,11 @@ namespace ConsultasMedicas.API.Data
 
         public DbSet<ConsultaModel> Consultas { get; set; }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlite("DataSource=tds.db;Cache=Shared");
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ConsultaModel>()
