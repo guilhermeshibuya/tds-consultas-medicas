@@ -24,7 +24,7 @@ namespace ConsultasMedicas.API.Models
 
         [Required(ErrorMessage = "Campo obrigatório")]
         [Display(Name = "Especialidades")]
-        public virtual ICollection<EspecialidadeModel> Especialidades { get; set; }
+        public virtual EspecialidadeModel Especialidade { get; set; }
 
         public virtual ICollection<ConsultaModel> Consultas { get; set; }
 
@@ -34,7 +34,6 @@ namespace ConsultasMedicas.API.Models
         public MedicoModel() 
         {
             Consultas = new HashSet<ConsultaModel>();
-            Especialidades = new HashSet<EspecialidadeModel>();
         }
 
 
