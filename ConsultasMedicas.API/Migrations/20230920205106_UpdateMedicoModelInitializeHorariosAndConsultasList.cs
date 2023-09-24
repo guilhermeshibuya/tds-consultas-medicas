@@ -5,7 +5,7 @@
 namespace ConsultasMedicas.API.Migrations
 {
     /// <inheritdoc />
-    public partial class FixDatabaseConfiguring : Migration
+    public partial class UpdateMedicoModelInitializeHorariosAndConsultasList : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

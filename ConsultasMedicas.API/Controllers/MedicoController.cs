@@ -72,23 +72,24 @@ namespace ConsultasMedicas.API.Controllers
         }
 
         [HttpPost("{id:int}/horarios-disponiveis")]
-        public async Task<IActionResult> PostAsync(
+        public async Task<IActionResult> AddHorarioAsync(
             [FromRoute] int id,
             [FromBody] DateTime horario,
             [FromServices] AppDbContext context
         )
         {
-            var medico = await context.Medicos.FindAsync(id);
+            var medicoToUpdate = await context.Medicos.FindAsync(id);
 
-            if (medico == null) return NotFound();
+            if (medicoToUpdate == null) return NotFound();
 
             var horarioDisponivel = new HorarioModel
             {
-                Medico = medico,
                 HorarioDisponivel = horario
             };
 
-            medico.HorariosDisponiveis!.Add(horarioDisponivel);
+            medicoToUpdate.HorariosDisponiveis!.Add(horarioDisponivel);
+
+            context.Medicos.Update(medicoToUpdate);
 
             var result = await context.SaveChangesAsync();
 
@@ -109,7 +110,7 @@ namespace ConsultasMedicas.API.Controllers
             if (medicoToUpdate == null) return NotFound();
 
             medicoToUpdate.Nome = medico.Nome;
-            //medicoToUpdate.Especialidade = medico.Especialidade;
+            medicoToUpdate.IdEspecialidade = medico.IdEspecialidade;
             medicoToUpdate.CRM = medico.CRM;
             //medicoToUpdate.HorariosDisponiveis = medico.HorariosDisponiveis;
             medicoToUpdate.Consultas = medico.Consultas;

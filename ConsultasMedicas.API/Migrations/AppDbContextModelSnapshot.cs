@@ -93,12 +93,12 @@ namespace ConsultasMedicas.API.Migrations
                     b.Property<DateTime>("HorarioDisponivel")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("MedicoIdMedico")
+                    b.Property<int?>("MedicoModelIdMedico")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("IdHorario");
 
-                    b.HasIndex("MedicoIdMedico");
+                    b.HasIndex("MedicoModelIdMedico");
 
                     b.ToTable("HorarioModel");
                 });
@@ -113,9 +113,6 @@ namespace ConsultasMedicas.API.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("EspecialidadeIdEspecialidade")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int?>("IdEspecialidade")
                         .HasColumnType("INTEGER");
 
@@ -125,8 +122,6 @@ namespace ConsultasMedicas.API.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("IdMedico");
-
-                    b.HasIndex("EspecialidadeIdEspecialidade");
 
                     b.ToTable("Medicos");
                 });
@@ -206,25 +201,9 @@ namespace ConsultasMedicas.API.Migrations
 
             modelBuilder.Entity("ConsultasMedicas.API.Models.HorarioModel", b =>
                 {
-                    b.HasOne("ConsultasMedicas.API.Models.MedicoModel", "Medico")
+                    b.HasOne("ConsultasMedicas.API.Models.MedicoModel", null)
                         .WithMany("HorariosDisponiveis")
-                        .HasForeignKey("MedicoIdMedico");
-
-                    b.Navigation("Medico");
-                });
-
-            modelBuilder.Entity("ConsultasMedicas.API.Models.MedicoModel", b =>
-                {
-                    b.HasOne("ConsultasMedicas.API.Models.EspecialidadeModel", "Especialidade")
-                        .WithMany("Medicos")
-                        .HasForeignKey("EspecialidadeIdEspecialidade");
-
-                    b.Navigation("Especialidade");
-                });
-
-            modelBuilder.Entity("ConsultasMedicas.API.Models.EspecialidadeModel", b =>
-                {
-                    b.Navigation("Medicos");
+                        .HasForeignKey("MedicoModelIdMedico");
                 });
 
             modelBuilder.Entity("ConsultasMedicas.API.Models.MedicoModel", b =>

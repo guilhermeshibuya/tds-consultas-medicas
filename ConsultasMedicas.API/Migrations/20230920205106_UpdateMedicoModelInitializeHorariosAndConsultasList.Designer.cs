@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ConsultasMedicas.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230919011151_Medidocespecialidade")]
-    partial class Medidocespecialidade
+    [Migration("20230920205106_UpdateMedicoModelInitializeHorariosAndConsultasList")]
+    partial class UpdateMedicoModelInitializeHorariosAndConsultasList
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -29,29 +29,40 @@ namespace ConsultasMedicas.API.Migrations
                     b.Property<DateTime>("DataHoraConsulta")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("IdMedico")
+                    b.Property<int?>("IdMedico")
+                        .IsRequired()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("IdPaciente")
+                    b.Property<int?>("IdPaciente")
+                        .IsRequired()
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("IdRecepcionista")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("MedicoModelIdMedico")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Observacoes")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int?>("PacienteModelIdPaciente")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("RecepcionistaModelIdRecepcionista")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("TipoConsulta")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("IdConsulta");
 
-                    b.HasIndex("IdMedico");
+                    b.HasIndex("MedicoModelIdMedico");
 
-                    b.HasIndex("IdPaciente");
+                    b.HasIndex("PacienteModelIdPaciente");
 
-                    b.HasIndex("IdRecepcionista");
+                    b.HasIndex("RecepcionistaModelIdRecepcionista");
 
                     b.ToTable("Consultas");
                 });
@@ -85,12 +96,15 @@ namespace ConsultasMedicas.API.Migrations
                     b.Property<DateTime>("HorarioDisponivel")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("IdMedico")
+                    b.Property<int>("IdMedico")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("MedicoModelIdMedico")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("IdHorario");
 
-                    b.HasIndex("IdMedico");
+                    b.HasIndex("MedicoModelIdMedico");
 
                     b.ToTable("HorarioModel");
                 });
@@ -114,8 +128,6 @@ namespace ConsultasMedicas.API.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("IdMedico");
-
-                    b.HasIndex("IdEspecialidade");
 
                     b.ToTable("Medicos");
                 });
@@ -180,50 +192,24 @@ namespace ConsultasMedicas.API.Migrations
 
             modelBuilder.Entity("ConsultasMedicas.API.Models.ConsultaModel", b =>
                 {
-                    b.HasOne("ConsultasMedicas.API.Models.MedicoModel", "Medico")
+                    b.HasOne("ConsultasMedicas.API.Models.MedicoModel", null)
                         .WithMany("Consultas")
-                        .HasForeignKey("IdMedico")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MedicoModelIdMedico");
 
-                    b.HasOne("ConsultasMedicas.API.Models.PacienteModel", "Paciente")
+                    b.HasOne("ConsultasMedicas.API.Models.PacienteModel", null)
                         .WithMany("Consultas")
-                        .HasForeignKey("IdPaciente")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PacienteModelIdPaciente");
 
-                    b.HasOne("ConsultasMedicas.API.Models.RecepcionistaModel", "Recepcionista")
+                    b.HasOne("ConsultasMedicas.API.Models.RecepcionistaModel", null)
                         .WithMany("ConsultasAgendadas")
-                        .HasForeignKey("IdRecepcionista");
-
-                    b.Navigation("Medico");
-
-                    b.Navigation("Paciente");
-
-                    b.Navigation("Recepcionista");
+                        .HasForeignKey("RecepcionistaModelIdRecepcionista");
                 });
 
             modelBuilder.Entity("ConsultasMedicas.API.Models.HorarioModel", b =>
                 {
-                    b.HasOne("ConsultasMedicas.API.Models.MedicoModel", "Medico")
+                    b.HasOne("ConsultasMedicas.API.Models.MedicoModel", null)
                         .WithMany("HorariosDisponiveis")
-                        .HasForeignKey("IdMedico");
-
-                    b.Navigation("Medico");
-                });
-
-            modelBuilder.Entity("ConsultasMedicas.API.Models.MedicoModel", b =>
-                {
-                    b.HasOne("ConsultasMedicas.API.Models.EspecialidadeModel", "Especialidade")
-                        .WithMany("Medicos")
-                        .HasForeignKey("IdEspecialidade");
-
-                    b.Navigation("Especialidade");
-                });
-
-            modelBuilder.Entity("ConsultasMedicas.API.Models.EspecialidadeModel", b =>
-                {
-                    b.Navigation("Medicos");
+                        .HasForeignKey("MedicoModelIdMedico");
                 });
 
             modelBuilder.Entity("ConsultasMedicas.API.Models.MedicoModel", b =>

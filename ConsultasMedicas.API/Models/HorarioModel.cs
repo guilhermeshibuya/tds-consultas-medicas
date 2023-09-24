@@ -8,9 +8,6 @@ namespace ConsultasMedicas.API.Models
         [DisplayName("Id")]
         public int IdHorario { get; set; }
 
-        [DisplayName("Médico")]
-        public MedicoModel? Medico { get; set; }
-
         [DisplayName("Horário Disponível")]
         public DateTime HorarioDisponivel { get; set; }
     }

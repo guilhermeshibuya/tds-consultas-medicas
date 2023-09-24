@@ -28,10 +28,10 @@ namespace ConsultasMedicas.API.Models
 
         [DisplayName("Horários Disponíveis")]
         [DisplayFormat(DataFormatString = "{dd/MM/yyyy HH:mm}")]
-        [DateTimeValidator(ErrorMessage = "A data não pode ser no passado")]
-        public List<HorarioModel>? HorariosDisponiveis { get; set; }
+        //[DateTimeValidator(ErrorMessage = "A data não pode ser no passado")]
+        public List<HorarioModel> HorariosDisponiveis { get; set; } = new();
 
         [DisplayName("Consultas Agendadas")]
-        public List<ConsultaModel>? Consultas { get; set; }
+        public List<ConsultaModel> Consultas { get; set; } = new();
     }
 }
