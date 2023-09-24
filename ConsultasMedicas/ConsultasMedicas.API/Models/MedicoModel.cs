@@ -1,9 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ConsultasMedicas.API.Models
 {
     public class MedicoModel
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
         [Required(ErrorMessage = "Campo obrigatório")]
         [Display(Name = "Primeiro nome")]
         [StringLength(50, MinimumLength = 3, ErrorMessage = "Nome invalido")]

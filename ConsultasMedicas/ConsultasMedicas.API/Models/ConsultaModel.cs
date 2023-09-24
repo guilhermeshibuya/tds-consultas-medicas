@@ -1,11 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
-
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ConsultasMedicas.API.Models;
 
 public class ConsultaModel
 {
-    [Display(Name = "Código")] public int Id { get; set; }
+
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    [Display(Name = "Código")] 
+    public int Id { get; set; }
 
     [Required(ErrorMessage = "Campo obrigatório")]
     [Display(Name = "Data e hora da consulta")]
