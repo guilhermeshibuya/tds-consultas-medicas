@@ -4,13 +4,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ConsultasMedicas.API.Models;
 
-public class PacienteModel
+public class RecepcionistaModel
 {
     [Required(ErrorMessage = "CPF é obrigatório")]
     [Display(Name = "CPF")]
     public string CPF { get; set; }
 
-    public virtual ICollection<ConsultaModel> Consulta { get; set; }
+    public virtual ICollection<ConsultaModel> Appointments { get; set; }
+
     [Required(ErrorMessage = "Informe o nome")]
     [Display(Name = "Nome")]
     [StringLength(20, MinimumLength = 3, ErrorMessage = "Nome informado e invalido")]
@@ -25,18 +26,7 @@ public class PacienteModel
     [Display(Name = "Nome completo")]
     public string FullName => PrimeiroNome + " " + Sobrenome;
 
-    [Required(ErrorMessage = "Campo obrigatório")]
-    [Display(Name = "Data de nascimento")]
-    [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-    [DataType(DataType.Date, ErrorMessage = "Data inválida")]
-    public DateTime Aniversario { get; set; }
 
-    [NotMapped][Display(Name = "Idade")] public int Age => (int)((DateTime.Now - Aniversario).TotalDays / 365.25);
-
-    [Required(ErrorMessage = "Campo obrigatório")]
-    [Display(Name = "E-mail")]
-    [EmailAddress(ErrorMessage = "E-mail inválido")]
-    public string Email { get; set; }
 
     [Required(ErrorMessage = "Campo obrigatório")]
     [Display(Name = "Telefone")]
@@ -45,6 +35,6 @@ public class PacienteModel
 
     public PacienteModel()
     {
-        Consulta = new HashSet<ConsultaModel>();
+        ConsultaModel = new HashSet<ConsultaModel>();
     }
 }
