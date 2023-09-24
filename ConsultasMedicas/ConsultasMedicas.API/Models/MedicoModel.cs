@@ -20,7 +20,7 @@ namespace ConsultasMedicas.API.Models
 
         [Required(ErrorMessage = "Campo obrigatório")]
         [Display(Name = "CRM")]
-        [RegularExpression(@"^[A-Z]{2}-\d{5}$")]
+        [RegularExpression(@"^[A-Z]{2}\d{5}$")]
         public string CRM { get; set; }
 
         [Required(ErrorMessage = "Campo obrigatório")]
