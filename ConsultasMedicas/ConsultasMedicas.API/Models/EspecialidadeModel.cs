@@ -9,7 +9,7 @@ namespace ConsultasMedicas.API.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Campo obrigatório")]
-        [StringLength(50, MinimumLength = 3, ErrorMessage = "O {0} deve ter entre {2} e {1} caracteres")]
+        [StringLength(50, MinimumLength = 3, ErrorMessage = "Nome informado e muito grande")]
         public string Nome { get; set; }
 
         [Required(ErrorMessage = "Campo obrigatório")]

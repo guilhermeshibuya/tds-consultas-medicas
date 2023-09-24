@@ -11,6 +11,7 @@ public class PacienteModel
     public string CPF { get; set; }
 
     public virtual ICollection<ConsultaModel> Consulta { get; set; }
+
     [Required(ErrorMessage = "Informe o nome")]
     [Display(Name = "Nome")]
     [StringLength(20, MinimumLength = 3, ErrorMessage = "Nome informado e invalido")]
@@ -31,7 +32,8 @@ public class PacienteModel
     [DataType(DataType.Date, ErrorMessage = "Data inválida")]
     public DateTime Aniversario { get; set; }
 
-    [NotMapped][Display(Name = "Idade")] public int Age => (int)((DateTime.Now - Aniversario).TotalDays / 365.25);
+    [NotMapped][Display(Name = "Idade")] 
+    public int Age => (int)((DateTime.Now - Aniversario).TotalDays / 365.25);
 
     [Required(ErrorMessage = "Campo obrigatório")]
     [Display(Name = "E-mail")]

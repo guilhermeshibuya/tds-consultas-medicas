@@ -6,12 +6,12 @@ namespace ConsultasMedicas.API.Models
     {
         [Required(ErrorMessage = "Campo obrigatório")]
         [Display(Name = "Primeiro nome")]
-        [StringLength(50, MinimumLength = 3, ErrorMessage = "O {0} deve ter entre {2} e {1} caracteres")]
+        [StringLength(50, MinimumLength = 3, ErrorMessage = "Nome invalido")]
         public string Nome { get; set; }
 
         [Required(ErrorMessage = "Campo obrigatório")]
         [Display(Name = "Sobrenome")]
-        [StringLength(50, MinimumLength = 3, ErrorMessage = "O {0} deve ter entre {2} e {1} caracteres")]
+        [StringLength(50, MinimumLength = 3, ErrorMessage = "Nome invalido")]
         public string Sobrenome { get; set; }
 
         [Required(ErrorMessage = "Campo obrigatório")]

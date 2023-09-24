@@ -10,7 +10,7 @@ public class RecepcionistaModel
     [Display(Name = "CPF")]
     public string CPF { get; set; }
 
-    public virtual ICollection<ConsultaModel> Appointments { get; set; }
+    public virtual ICollection<ConsultaModel> Consulta { get; set; }
 
     [Required(ErrorMessage = "Informe o nome")]
     [Display(Name = "Nome")]
@@ -33,8 +33,8 @@ public class RecepcionistaModel
     [Phone(ErrorMessage = "Telefone inválido")]
     public string Telefone { get; set; }
 
-    public PacienteModel()
+    public RecepcionistaModel()
     {
-        ConsultaModel = new HashSet<ConsultaModel>();
+        Consulta = new HashSet<ConsultaModel>();
     }
 }
