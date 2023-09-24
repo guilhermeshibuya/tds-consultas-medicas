@@ -6,6 +6,8 @@ namespace ConsultasMedicas.API.Models;
 
 public class PacienteModel
 {
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int Id { get; set; }
     [Required(ErrorMessage = "CPF é obrigatório")]
     [Display(Name = "CPF")]
     public string CPF { get; set; }

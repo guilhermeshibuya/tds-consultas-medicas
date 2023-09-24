@@ -1,10 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Numerics;
 
 namespace ConsultasMedicas.API.Models
 {
     public class EspecialidadeModel
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Display(Name = "Código")]
         public int Id { get; set; }
 
