@@ -25,19 +25,21 @@ public class ConsultaModel
 
     [Required(ErrorMessage = "Campo obrigatório")]
     [Display(Name = "Paciente")]
-    public int PacientetId { get; set; }
+    public int PacienteId { get; set; }
 
     [Required(ErrorMessage = "Campo obrigatório")]
     [Display(Name = "Descrição")]
     [StringLength(500, MinimumLength = 0, ErrorMessage = "Descriçao muito longa")]
     public string Descricao { get; set; }
 
+    [Required(ErrorMessage = "Campo obrigatório")]
+    [Display(Name = "Recepcionista")]
+    public int RecepcionistaId { get; set; }
 
     [Display(Name = "Médico")] public MedicoModel Medico { get; set; }
 
     [Display(Name = "Paciente")] public PacienteModel Paciente { get; set; }
 
-    [Display(Name = "Valor da consulta")]
-    [DisplayFormat(DataFormatString = "{0:C2}")]
-    public decimal Invoice { get; set; }
+    [Display(Name = "Recepcionista")] public RecepcionistaModel Recepcionista { get; set; }
+
 }

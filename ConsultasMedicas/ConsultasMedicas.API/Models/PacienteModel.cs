@@ -10,7 +10,7 @@ public class PacienteModel
     [Display(Name = "CPF")]
     public string CPF { get; set; }
 
-    public virtual ICollection<ConsultaModel> Consulta { get; set; }
+    public virtual ICollection<ConsultaModel> Consultas { get; set; }
 
     [Required(ErrorMessage = "Informe o nome")]
     [Display(Name = "Nome")]
@@ -47,6 +47,6 @@ public class PacienteModel
 
     public PacienteModel()
     {
-        Consulta = new HashSet<ConsultaModel>();
+        Consultas = new HashSet<ConsultaModel>();
     }
 }

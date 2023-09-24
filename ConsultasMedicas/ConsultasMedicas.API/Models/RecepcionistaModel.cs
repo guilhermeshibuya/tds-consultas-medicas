@@ -10,7 +10,7 @@ public class RecepcionistaModel
     [Display(Name = "CPF")]
     public string CPF { get; set; }
 
-    public virtual ICollection<ConsultaModel> Consulta { get; set; }
+    public virtual ICollection<ConsultaModel> Consultas { get; set; }
 
     [Required(ErrorMessage = "Informe o nome")]
     [Display(Name = "Nome")]
@@ -35,6 +35,6 @@ public class RecepcionistaModel
 
     public RecepcionistaModel()
     {
-        Consulta = new HashSet<ConsultaModel>();
+        Consultas = new HashSet<ConsultaModel>();
     }
 }
