@@ -2,14 +2,14 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
 
-namespace Healthy.Domain.Entities;
+namespace ConsultasMedicas.API.Models;
 
-public class PacienteModel 
+public class PacienteModel
 {
     [Required(ErrorMessage = "CPF é obrigatório")]
     [Display(Name = "CPF")]
     public string CPF { get; set; }
-    
+
     public virtual ICollection<ConsultaModel> Appointments { get; set; }
     [Required(ErrorMessage = "Informe o nome")]
     [Display(Name = "Nome")]

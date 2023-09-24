@@ -2,9 +2,9 @@
 using Healthy.Domain.Enums;
 
 
-namespace Healthy.Domain.Entities;
+namespace ConsultasMedicas.API.Models;
 
-public class ConsultaModel 
+public class ConsultaModel
 {
     [Display(Name = "Código")] public int Id { get; set; }
 
@@ -12,7 +12,7 @@ public class ConsultaModel
     [Display(Name = "Data e hora da consulta")]
     [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}", ApplyFormatInEditMode = true)]
     [DataType(DataType.DateTime, ErrorMessage = "Data inválida")]
-  s
+    s
     public DateTime Data { get; set; }
 
     [Display(Name = "Criado em")]
