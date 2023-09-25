@@ -63,12 +63,14 @@ namespace Consultas.API.Data
             modelBuilder.Entity<MedicoModel>()
                 .HasOne(m => m.Especialidade)
                 .WithMany()
-                .HasForeignKey(m => m.IdEspecialidade);
+                .HasForeignKey(m => m.IdEspecialidade)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<EspecialidadeModel>()
                 .HasMany(e => e.Medicos)
                 .WithOne(m => m.Especialidade)
-                .HasForeignKey(m => m.IdEspecialidade);
+                .HasForeignKey(m => m.IdEspecialidade)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<MedicoModel>()
                 .HasIndex(m => m.CRM)
@@ -85,12 +87,14 @@ namespace Consultas.API.Data
             modelBuilder.Entity<MedicoModel>()
                 .HasMany(m => m.HorariosDisponiveis)
                 .WithOne(h => h.Medico)
-                .HasForeignKey(h => h.IdMedico);
+                .HasForeignKey(h => h.IdMedico)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<HorarioModel>()
                 .HasOne(h => h.Medico)
                 .WithMany(m => m.HorariosDisponiveis)
-                .HasForeignKey(h => h.IdMedico);
+                .HasForeignKey(h => h.IdMedico)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
