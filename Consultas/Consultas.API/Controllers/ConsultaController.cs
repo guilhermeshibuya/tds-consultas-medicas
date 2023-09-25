@@ -7,7 +7,7 @@ namespace Consultas.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ConsultasController : ControllerBase
+    public class ConsultaController : ControllerBase
     {
         [HttpGet]
         public async Task<IActionResult> GetAllAsync(
