@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using Consultas.API.Enums;
+using System.Text.Json.Serialization;
 
 namespace Consultas.API.Models
 {
@@ -13,7 +14,7 @@ namespace Consultas.API.Models
 
         [Required(ErrorMessage = "Campo obrigatório")]
         [Display(Name = "Data e hora da consulta")]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:g}", ApplyFormatInEditMode = true)]
         [DataType(DataType.DateTime, ErrorMessage = "Data inválida")]
         public DateTime? Data { get; set; }
 
@@ -38,12 +39,15 @@ namespace Consultas.API.Models
         [Display(Name = "Tipo da Consulta")]
         public TipoConsultaEnum? TipoConsulta { get; set; }
 
+        [JsonIgnore]
         [Display(Name = "Médico")] 
         public MedicoModel? Medico { get; set; }
 
+        [JsonIgnore]
         [Display(Name = "Paciente")] 
         public PacienteModel? Paciente { get; set; }
 
+        [JsonIgnore]
         [Display(Name = "Recepcionista")] 
         public RecepcionistaModel? Recepcionista { get; set; }
     }

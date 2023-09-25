@@ -31,6 +31,25 @@ namespace Consultas.API.Controllers
                     {
                         h.DataHorario
                     }).ToList(),
+                    Consultas = m.Consultas.Select(c => new
+                    {
+                        c.Id,
+                        Paciente = new 
+                        {
+                            c.IdPaciente,
+                            c.Paciente!.PrimeiroNome,
+                            c.Paciente.Sobrenome,
+                        },
+                        Recepcionista = new
+                        {
+                            c.IdRecepcionista,
+                            c.Recepcionista!.PrimeiroNome,
+                            c.Recepcionista.Sobrenome
+                        },
+                        c.Data,
+                        c.Descricao,
+                        TipoConsulta = c.TipoConsulta.ToString(),
+                    }).ToList()
                 })
                 .ToListAsync();
 
