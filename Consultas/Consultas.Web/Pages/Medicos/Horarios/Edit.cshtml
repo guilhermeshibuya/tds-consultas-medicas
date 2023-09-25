@@ -1,0 +1,23 @@
+﻿@page "{idMedico:int}/{idHorario:int}"
+@model Consultas.Web.Pages.Medicos.Horarios.EditModel
+
+<h1 class="mb-3">
+    Editar horário
+</h1>
+
+<form class="form" method="post">
+    <div class="form-group">
+        <label asp-for="DataHorario"></label>
+        <input asp-for="DataHorario"
+               type="datetime-local"
+               class="form-control" />
+    </div>
+    <div class="form-group">
+        <input type="submit"
+               class="btn btn-primary"
+               value="Salvar" />
+        <a asp-page="/Medicos/Index" class="btn btn-secondary">
+            Voltar
+        </a>
+    </div>
+</form>

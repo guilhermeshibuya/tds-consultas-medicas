@@ -11,6 +11,8 @@
     {
         <li>
             @Html.DisplayFor(model => horario.DataHorario)
+            <a asp-page="/Medicos/Horarios/Edit" asp-route-idMedico="@Model.Horarios.Id" asp-route-idHorario="@horario.Id">Editar</a>
+            <a asp-page="/Medicos/Horarios/Delete" asp-route-idMedico="@Model.Horarios.Id" asp-route-idHorario="@horario.Id">Deletar</a>
         </li>
     }
 </ul>

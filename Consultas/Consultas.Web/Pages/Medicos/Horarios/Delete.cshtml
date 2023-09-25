@@ -1,0 +1,20 @@
+﻿@page "{idMedico:int}/{idHorario:int}"
+@model Consultas.Web.Pages.Medicos.Horarios.DeleteModel
+
+<h1 class="mb-3">Detalhes do horário para remover</h1>
+
+<p>
+    @Model.DataHorario.DataHorario
+</p>
+
+<form method="post" class="form">
+    <div class="form-group">
+        <input type="submit"
+               value="Excluir"
+               class="btn btn-danger" />
+        <a asp-page="/Medicos/Index"
+           class="btn btn-secondary">
+            Voltar
+        </a>
+    </div>
+</form>

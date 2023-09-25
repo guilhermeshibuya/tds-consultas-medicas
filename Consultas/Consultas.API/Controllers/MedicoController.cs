@@ -214,6 +214,7 @@ namespace Consultas.API.Controllers
                     m.Sobrenome,
                     HorariosDisponiveis = m.HorariosDisponiveis!.Select(h => new
                     {
+                        h.Id,
                         h.DataHorario
                     }).ToList(),
                 })
@@ -222,6 +223,25 @@ namespace Consultas.API.Controllers
             if (medico == null) return NotFound("Médico não encontrado!");
 
             return Ok(medico);
+        }
+
+        [HttpGet("horarios/{idHorario:int}")]
+        public async Task<IActionResult> GetHorarioByIdAsync(
+            [FromRoute] int idHorario,
+            [FromServices] AppDbContext context
+        )
+        {
+            var horario = await context.HorariosMedico
+                .Select(h => new
+                {
+                    h.Id,
+                    h.DataHorario
+                })
+                .FirstOrDefaultAsync(h => h.Id == idHorario);
+
+            if (horario == null) return NotFound();
+
+            return Ok(horario);
         }
 
         [HttpPost("{id:int}/horarios")]
