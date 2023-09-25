@@ -2,6 +2,7 @@
 using Consultas.API.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 
 namespace Consultas.API.Controllers
 {
@@ -15,9 +16,6 @@ namespace Consultas.API.Controllers
         )
         {
             var consultas = await context.Consultas
-                .Include(c => c.Medico)
-                .Include(c => c.Paciente)
-                .Include(c => c.Recepcionista)
                 .Select(c => new
                 {
                     c.Id,
@@ -50,14 +48,39 @@ namespace Consultas.API.Controllers
             return Ok(consultas);
         }
 
-
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetByIdAsync(
              [FromRoute] int id,
              [FromServices] AppDbContext context
         )
         {
-            var consulta = await context.Consultas.FindAsync(id);
+            var consulta = await context.Consultas
+                  .Select(c => new
+                  {
+                      c.Id,
+                      Medico = new
+                      {
+                          c.IdMedico,
+                          c.Medico!.Nome,
+                          c.Medico.Sobrenome
+                      },
+                      Paciente = new
+                      {
+                          c.IdPaciente,
+                          c.Paciente!.PrimeiroNome,
+                          c.Paciente.Sobrenome
+                      },
+                      Recepcionista = new
+                      {
+                          c.IdRecepcionista,
+                          c.Recepcionista!.PrimeiroNome,
+                          c.Recepcionista.Sobrenome
+                      },
+                      c.Data,
+                      c.Descricao,
+                      TipoConsulta = c.TipoConsulta.ToString(),
+                  })
+                  .ToListAsync();
 
             if (consulta == null) return NotFound("Médico não encontrado!");
 
@@ -96,6 +119,38 @@ namespace Consultas.API.Controllers
             if (result == 0) return BadRequest();
 
             return Created($"/{consulta.Id}", consulta);
+        }
+
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> PutAsync(
+            [FromRoute] int id,
+            [FromBody] ConsultaModel consulta,
+            [FromServices] AppDbContext context
+        )
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var consultaToUpdate = await context.Consultas.FindAsync(id);
+
+            if (consultaToUpdate == null) return NotFound("Consulta não encontrada!");
+
+            consultaToUpdate.IdMedico = consulta.IdMedico;
+            consultaToUpdate.IdPaciente = consulta.IdPaciente;
+            consultaToUpdate.IdRecepcionista = consulta.IdRecepcionista;
+            consultaToUpdate.Data = consulta.Data;
+            consultaToUpdate.Descricao = consulta.Descricao;
+            consultaToUpdate.TipoConsulta = consulta.TipoConsulta;
+
+            context.Consultas.Update(consultaToUpdate);
+
+            var result = await context.SaveChangesAsync();
+
+            if (result == 0) return BadRequest(result);
+
+            return Ok(consultaToUpdate);
         }
     }
 }
