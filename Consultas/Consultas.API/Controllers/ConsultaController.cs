@@ -152,5 +152,24 @@ namespace Consultas.API.Controllers
 
             return Ok(consultaToUpdate);
         }
+
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> DeleteAsync(
+            [FromRoute] int id,
+            [FromServices] AppDbContext context
+        )
+        {
+            var consultaToDelete = await context.Consultas.FindAsync(id);
+
+            if (consultaToDelete == null) return NotFound("Consulta não encontrada!");
+
+            context.Consultas.Remove(consultaToDelete);
+
+            var result = await context.SaveChangesAsync();
+
+            if (result == 0) return BadRequest();
+
+            return Ok(consultaToDelete);
+        }
     }
 }
