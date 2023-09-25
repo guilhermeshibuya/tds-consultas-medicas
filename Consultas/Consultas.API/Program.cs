@@ -1,4 +1,4 @@
-using ConsultasMedicas.API.Data;
+using Consultas.API.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
