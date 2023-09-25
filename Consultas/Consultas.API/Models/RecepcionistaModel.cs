@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Consultas.API.Models
 {
@@ -9,7 +10,7 @@ namespace Consultas.API.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int? Id { get; set; }
 
-        [Required(ErrorMessage = "Informe o nome")]
+        [Required(ErrorMessage = "Campo obrigatório")]
         [Display(Name = "Nome")]
         [StringLength(20, MinimumLength = 3, ErrorMessage = "Nome informado e invalido")]
         public string? PrimeiroNome { get; set; }
@@ -29,6 +30,7 @@ namespace Consultas.API.Models
         [Display(Name = "Telefone")]
         public string? Telefone { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<ConsultaModel>? Consultas { get; set; }
 
         public RecepcionistaModel()
