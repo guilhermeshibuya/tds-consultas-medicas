@@ -1,0 +1,19 @@
+﻿@page "{id:int}"
+@model Consultas.Web.Pages.Medicos.Horarios.IndexModel
+
+<p>
+    <strong>Nome:</strong>
+    @($"{Model.Horarios.Nome} {Model.Horarios.Sobrenome}")
+</p>
+<p><strong>Horários Disponíveis</strong></p>
+<ul>
+    @foreach(var horario in Model.Horarios.HorariosDisponiveis)
+    {
+        <li>
+            @Html.DisplayFor(model => horario.DataHorario)
+        </li>
+    }
+</ul>
+<a asp-page="/Medicos/Horarios/Create" asp-route-id="@Model.Horarios.Id" class="btn btn-primary">
+    Adicionar horário
+</a>

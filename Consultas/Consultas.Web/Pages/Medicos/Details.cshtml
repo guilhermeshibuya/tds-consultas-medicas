@@ -1,7 +1,7 @@
-﻿@page
-@model Consultas.Web.Pages.Medicos.DeleteModel
+﻿@page "{id:int}"
+@model Consultas.Web.Pages.Medicos.DetailsModel
 
-<h1 class="mb-3">Detalhes do médico para remover</h1>
+<h1 class="mb-3">Detalhes do médico</h1>
 
 <div class="row">
     <div class="col">
@@ -9,7 +9,7 @@
             <strong>Nome:</strong>
             @($"{Model.Medico.Nome} {Model.Medico.Sobrenome}")
         </p>
-     
+
     </div>
     <div class="col">
         <p>
@@ -33,19 +33,10 @@
         </p>
     </div>
 </div>
-
-<form method="post" class="form">
-    <div class="form-group">
-        <input 
-            type="submit"
-            value="Excluir"
-            class="btn btn-danger"
-        />
-        <a 
-            asp-page="/Medicos/Index" 
-            class="btn btn-secondary"
-        >
-            Voltar
-        </a>
-    </div>
-</form>
+<a 
+    asp-page="/Medicos/Horarios/Index" 
+    asp-route-id="@Model.Medico.Id"
+    class="btn btn-primary"
+>
+    Horários
+</a>

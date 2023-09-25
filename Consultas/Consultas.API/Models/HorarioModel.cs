@@ -16,6 +16,8 @@ namespace Consultas.API.Models
         public int? IdMedico { get; set; }
 
         [Required]
+        [DisplayFormat(DataFormatString = "{0:g}")]
+        [DisplayName("Data e horário")]
         public DateTime? DataHorario { get; set; }
 
         [JsonIgnore]
