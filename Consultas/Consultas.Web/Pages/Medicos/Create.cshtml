@@ -1,0 +1,92 @@
+﻿@page
+@model Consultas.Web.Pages.Medicos.CreateModel
+
+<h1>Cadastrar médico</h1>
+
+<form method="post" class="form">
+    <div asp-validation-summary="ModelOnly"></div>
+
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label asp-for="Medico.Nome"></label>
+                <input 
+                    asp-for="Medico.Nome"
+                    class="form-control"
+                />
+                <span 
+                    asp-validation-for="Medico.Nome"
+                    class="text-danger"
+                ></span>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label asp-for="Medico.Sobrenome"></label>
+                <input 
+                    asp-for="Medico.Sobrenome"
+                    class="form-control" 
+                />
+                <span 
+                    asp-validation-for="Medico.Sobrenome"
+                    class="text-danger"
+                ></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Medico.Email"></label>
+        <input 
+            asp-for="Medico.Email"
+            class="form-control"
+            placeholder="nome@exemplo.com"
+        />
+        <span 
+            asp-validation-for="Medico.Email"
+            class="text-danger"
+        ></span>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label asp-for="Medico.CRM"></label>
+                <input 
+                    asp-for="Medico.CRM"
+                    class="form-control" 
+                    placeholder="PR12345"
+                />
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="form-group">
+                <label asp-for="Medico.IdEspecialidade"></label>
+                <select asp-for="Medico.IdEspecialidade" class="form-control">
+                    <option selected disabled>-- Selecione uma especialidade --</option>
+                    @foreach (var item in Model.EspecialidadesList)
+                    {
+                        <option value="@item.Value">
+                            @item.Text
+                        </option>
+                    }
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <input 
+            type="submit"
+            class="btn btn-primary"
+            value="Salvar"
+        />
+        <a 
+            asp-page="/Medicos/Index"
+            class="btn btn-secondary"
+        >
+            Cancelar
+        </a>
+    </div>
+</form>

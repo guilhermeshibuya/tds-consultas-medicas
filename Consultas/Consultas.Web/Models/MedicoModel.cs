@@ -30,7 +30,7 @@ namespace Consultas.API.Models
         public string? CRM { get; set; }
 
         [Required(ErrorMessage = "Campo obrigatório")]
-        [Display(Name = "Especialidades")]
+        [Display(Name = "Especialidade")]
         public int? IdEspecialidade { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:g}")]
