@@ -1,0 +1,65 @@
+﻿@page
+@model Consultas.Web.Pages.Recepcionistas.IndexModel
+
+<h1 class="mb-3">Recepcionistas</h1>
+
+<a asp-page="/Pacientes/Create" class="btn btn-primary mb-3">
+    Cadastrar recepcionista
+</a>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead class="table-primary">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.RecepcionistaList[0].Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RecepcionistaList[0].PrimeiroNome)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RecepcionistaList[0].CPF)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RecepcionistaList[0].Telefone)
+                </th>
+                <th>
+                    Opções
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var recepcionista in Model.RecepcionistaList)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => recepcionista.Id)
+                    </td>
+                    <td>
+                        @($"{recepcionista.PrimeiroNome} {recepcionista.Sobrenome}")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => recepcionista.CPF)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => recepcionista.Telefone)
+                    </td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@recepcionista.Id">
+                            <i class="bi bi-pencil"></i>
+                            <span>Editar</span>
+                        </a>
+                        <a asp-page="./Details" asp-route-id="@recepcionista.Id">
+                            <i class="bi bi-eye"></i>
+                            <span>Visualizar</span>
+                        </a>
+                        <a asp-page="./Delete" asp-route-id="@recepcionista.Id">
+                            <i class="bi bi-trash"></i>
+                            <span>Excluir</span>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
