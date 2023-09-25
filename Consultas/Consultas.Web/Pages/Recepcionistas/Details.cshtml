@@ -1,0 +1,26 @@
+﻿@page "{id:int}"
+@model Consultas.Web.Pages.Recepcionistas.DetailsModel
+
+<h1 class="mb-3">Detalhes do recepcionista</h1>
+
+<div class="row">
+    <div class="col">
+        <p>
+            <strong>Nome:</strong>
+            @($"{Model.Recepcionista.PrimeiroNome} {Model.Recepcionista.Sobrenome}")
+        </p>
+
+    </div>
+    <div class="col">
+        <p>
+            <strong>Email:</strong>
+            @Model.Recepcionista.CPF
+        </p>
+    </div>
+</div>
+<div class="row">
+    <p>
+        <strong>Telefone:</strong>
+        @Model.Recepcionista.Telefone
+    </p>
+</div>

@@ -1,0 +1,39 @@
+﻿@page "{id:int}"
+@model Consultas.Web.Pages.Recepcionistas.DeleteModel
+
+<h1 class="mb-3">Detalhes do recepcionista para remover</h1>
+
+<div class="row">
+    <div class="col">
+        <p>
+            <strong>Nome:</strong>
+            @($"{Model.Recepcionista.PrimeiroNome} {Model.Recepcionista.Sobrenome}")
+        </p>
+
+    </div>
+    <div class="col">
+        <p>
+            <strong>Email:</strong>
+            @Model.Recepcionista.CPF
+        </p>
+    </div>
+</div>
+<div class="row">
+    <p>
+        <strong>Telefone:</strong>
+        @Model.Recepcionista.Telefone
+    </p>
+</div>
+
+<form method="post" class="form">
+    <div class="form-group">
+        <input type="submit"
+               value="Excluir"
+               class="btn btn-danger" />
+        <a asp-page="/Recepcionistas/Index"
+           class="btn btn-secondary">
+            Voltar
+        </a>
+    </div>
+</form>
+
