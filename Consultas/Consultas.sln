@@ -5,7 +5,7 @@ VisualStudioVersion = 17.7.34009.444
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Consultas.API", "Consultas.API\Consultas.API.csproj", "{93D317CD-BF02-482C-9E67-77AD0F3426A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Consultas.Web", "Consultas.Web\Consultas.Web.csproj", "{D5E357C3-4027-4FB2-BB0B-A43E9CE6E940}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Consultas.Web", "Consultas.Web\Consultas.Web.csproj", "{D5E357C3-4027-4FB2-BB0B-A43E9CE6E940}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

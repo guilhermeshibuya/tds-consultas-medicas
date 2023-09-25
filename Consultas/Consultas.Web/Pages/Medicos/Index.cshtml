@@ -1,0 +1,73 @@
+﻿@page
+@model Consultas.Web.Pages.Medicos.IndexModel
+@{
+}
+
+<h1 class="mb-3">Médicos</h1>
+
+<a asp-page="/Medicos/Create" class="btn btn-primary mb-3">
+    Cadastrar médico    
+</a>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead class="table-primary">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.MedicoList[0].Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MedicoList[0].Nome)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MedicoList[0].Sobrenome)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MedicoList[0].CRM)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MedicoList[0].Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MedicoList[0].Especialidade.Nome)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var medico in Model.MedicoList)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => medico.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => medico.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => medico.Sobrenome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => medico.CRM)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => medico.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => medico.Especialidade)
+                    </td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@medico.Id">
+                            Editar
+                        </a>
+                        <a asp-page="./Details" asp-route-id="@medico.Id">
+                            Visualizar
+                        </a>
+                        <a asp-page="./Delete" asp-route-id="@medico.Id">
+                            Remover
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
