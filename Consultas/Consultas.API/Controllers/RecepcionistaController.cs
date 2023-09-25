@@ -14,7 +14,35 @@ namespace Consultas.API.Controllers
             [FromServices] AppDbContext context
         )
         {
-            var recepcionistas = await context.Recepcionistas.ToListAsync();
+            var recepcionistas = await context.Recepcionistas
+                .Select(r => new
+                {
+                    r.Id,
+                    r.PrimeiroNome,
+                    r.Sobrenome,
+                    r.CPF,
+                    r.Telefone,
+                    Consultas = r.Consultas!.Select(c => new
+                    {
+                        c.Id,
+                        Paciente = new
+                        {
+                            c.IdPaciente,
+                            c.Paciente!.PrimeiroNome,
+                            c.Paciente.Sobrenome
+                        },
+                        Medico = new
+                        {
+                            c.IdMedico,
+                            c.Medico!.Nome,
+                            c.Medico.Sobrenome
+                        },
+                        c.Data,
+                        c.Descricao,
+                        TipoConsulta = c.TipoConsulta.ToString(),
+                    }).ToList()
+                })
+                .ToListAsync();
 
             if (recepcionistas == null) return NotFound();
 

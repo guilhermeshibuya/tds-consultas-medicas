@@ -22,7 +22,34 @@ namespace Consultas.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            var pacientes = await context.Pacientes.ToListAsync();
+            var pacientes = await context.Pacientes
+                .Select(p => new
+                {
+                    p.Id,
+                    p.PrimeiroNome,
+                    p.Sobrenome,
+                    p.CPF,
+                    Consultas = p.Consultas.Select(c => new
+                    {
+                        c.Id,
+                        Medico = new
+                        {
+                            c.IdMedico,
+                            c.Medico!.Nome,
+                            c.Medico.Sobrenome,
+                        },
+                        Recepcionista = new
+                        {
+                            c.IdRecepcionista,
+                            c.Recepcionista!.PrimeiroNome,
+                            c.Recepcionista.Sobrenome
+                        },
+                        c.Data,
+                        c.Descricao,
+                        TipoConsulta = c.TipoConsulta.ToString(),
+                    }).ToList()
+                })
+                .ToListAsync();
 
             if (pacientes == null || pacientes.Count == 0)
                 return NotFound();
