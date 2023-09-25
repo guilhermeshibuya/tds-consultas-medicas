@@ -39,6 +39,37 @@ namespace Consultas.API.Controllers
             return Ok(medicos);
         }
 
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetByIdAsync(
+            [FromRoute] int id,
+            [FromServices] AppDbContext context
+        )
+        {
+            var medico = await context.Medicos
+               .Include(m => m.Especialidade)
+               .Select(m => new
+               {
+                   m.Id,
+                   m.Nome,
+                   m.Sobrenome,
+                   m.Email,
+                   m.CRM,
+                   Especialidade = new
+                   {
+                       m.Especialidade!.Nome,
+                   },
+                   HorariosDisponiveis = m.HorariosDisponiveis.Select(h => new
+                   {
+                       h.DataHorario
+                   }).ToList(),
+               })
+               .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (medico == null) return NotFound("Médico não encontrado!");
+
+            return Ok(medico);
+        }
+
         [HttpPost]
         public async Task<IActionResult> PostAsync(
             [FromBody] MedicoModel medico,
@@ -99,6 +130,56 @@ namespace Consultas.API.Controllers
             if (result == 0) return BadRequest();
 
             return Ok(medicoToUpdate);
+        }
+
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> PutAsync(
+            [FromRoute] int id,
+            [FromBody] MedicoModel medico,
+            [FromServices] AppDbContext context
+        )
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var medicoToUpdate = await context.Medicos.FindAsync(id);
+
+            if (medicoToUpdate == null) return NotFound("Médico não encontrado!");
+
+            medicoToUpdate.Nome = medico.Nome;
+            medicoToUpdate.Sobrenome = medico.Sobrenome;
+            medicoToUpdate.Email = medico.Email;
+            medicoToUpdate.CRM = medico.CRM;
+            medicoToUpdate.IdEspecialidade = medico.IdEspecialidade;
+
+            context.Medicos.Update(medicoToUpdate);
+
+            var result = await context.SaveChangesAsync();
+
+            if (result == 0) return BadRequest();
+
+            return Ok(medicoToUpdate);
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> DeleteAsync(
+            [FromRoute] int id,            
+            [FromServices] AppDbContext context
+        )
+        {
+            var medicoToDelete = await context.Medicos.FindAsync(id);
+
+            if (medicoToDelete == null) return NotFound("Médico não encontrado!");
+
+            context.Medicos.Remove(medicoToDelete);
+
+            var result = await context.SaveChangesAsync();
+
+            if (result == 0) return BadRequest();
+
+            return Ok(medicoToDelete);
         }
     }
 }
