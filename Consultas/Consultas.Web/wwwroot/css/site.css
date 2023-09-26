@@ -24,3 +24,8 @@ body {
 a {
     text-decoration: none;
 }
+
+textarea {
+    resize: none;
+    height: 300px;
+}

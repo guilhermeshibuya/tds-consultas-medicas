@@ -1,0 +1,92 @@
+﻿@page
+@model Consultas.Web.Pages.Consultas.IndexModel
+
+<h1 class="mb-3">Consultas</h1>
+
+<a asp-page="/Consultas/Create" class="btn btn-primary mb-3">
+    Cadastrar consultas
+</a>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead class="table-primary">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ConsultaList[0].Id)
+                </th>
+                <th>
+                    Médico
+                </th>
+                <th>
+                    Paciente
+                </th>
+                <th>
+                    Recepcionista
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ConsultaList[0].Data)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ConsultaList[0].Descricao)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ConsultaList[0].TipoConsulta)
+                </th>
+                <th>
+                    Opções
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var consulta in Model.ConsultaList)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => consulta.Id)
+                    </td>
+                    <td>
+                        @($"{consulta.Medico.Nome} {consulta.Medico.Sobrenome}")
+                    </td>
+                    <td>
+                        @($"{consulta.Paciente.PrimeiroNome} {consulta.Medico.Sobrenome}")
+                    </td>
+                    <td>
+                        @($"{consulta.Recepcionista.PrimeiroNome} {consulta.Recepcionista.Sobrenome}")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => consulta.Data)
+                    </td>
+                    <td>
+                        @{
+                            var descricao = consulta.Descricao;
+                            var maxChar = 50;
+
+                            if (descricao.Length > maxChar)
+                            {
+                                descricao = descricao.Substring(0, maxChar) + "..."; 
+                            }
+                            @Html.DisplayFor(model => descricao)
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => consulta.TipoConsulta)
+                    </td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@consulta.Id">
+                            <i class="bi bi-pencil"></i>
+                            <span>Editar</span>
+                        </a>
+                        <a asp-page="./Details" asp-route-id="@consulta.Id">
+                            <i class="bi bi-eye"></i>
+                            <span>Visualizar</span>
+                        </a>
+                        <a asp-page="./Delete" asp-route-id="@consulta.Id">
+                            <i class="bi bi-trash"></i>
+                            <span>Excluir</span>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
