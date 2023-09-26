@@ -80,7 +80,7 @@ namespace Consultas.API.Controllers
                       c.Descricao,
                       TipoConsulta = c.TipoConsulta.ToString(),
                   })
-                  .ToListAsync();
+                  .FirstOrDefaultAsync(c => c.Id == id);
 
             if (consulta == null) return NotFound("Médico não encontrado!");
 

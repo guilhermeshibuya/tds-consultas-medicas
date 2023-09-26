@@ -53,3 +53,7 @@ main{
         color: white;
         border: white 2px solid;
     }
+textarea {
+    resize: none;
+    height: 300px;
+}
