@@ -52,13 +52,16 @@
                     </td>
                     <td>
                         <a asp-page="./Edit" asp-route-id="@medico.Id">
-                            Editar
+                            <i class="bi bi-pencil"></i>
+                            <span>Editar</span>
                         </a>
                         <a asp-page="./Details" asp-route-id="@medico.Id">
-                            Visualizar
+                            <i class="bi bi-eye"></i>
+                            <span>Visualizar</span>
                         </a>
                         <a asp-page="./Delete" asp-route-id="@medico.Id">
-                            Remover
+                            <i class="bi bi-trash"></i>
+                            <span>Excluir</span>
                         </a>
                     </td>
                 </tr>

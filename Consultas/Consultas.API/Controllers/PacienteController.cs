@@ -90,37 +90,28 @@ namespace Consultas.API.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> UpdateByIdAsync(int id, [FromBody] PacienteModel updatedPaciente)
+        public async Task<IActionResult> UpdateByIdAsync([FromRoute] int? id, [FromBody] PacienteModel paciente)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != updatedPaciente.Id)
-            {
-                return BadRequest("ID da URL não corresponde ao ID do paciente.");
-            }
+            var pacienteToUpdate = await context.Pacientes.FindAsync(id);
 
-            context.Entry(updatedPaciente).State = EntityState.Modified;
+            if (pacienteToUpdate == null) return NotFound();
 
-            try
-            {
-                await context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!PacienteExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            pacienteToUpdate.PrimeiroNome = paciente.PrimeiroNome;
+            pacienteToUpdate.Sobrenome = paciente.Sobrenome;
+            pacienteToUpdate.CPF = paciente.CPF;
 
-            return NoContent();
+            context.Pacientes.Update(pacienteToUpdate);
+
+            var result = await context.SaveChangesAsync();
+
+            if (result == 0) return BadRequest();
+
+            return Ok(pacienteToUpdate);
         }
 
         [HttpDelete("{id:int}")]
@@ -139,9 +130,12 @@ namespace Consultas.API.Controllers
             }
 
             context.Pacientes.Remove(paciente);
-            await context.SaveChangesAsync();
 
-            return NoContent();
+            var result =  await context.SaveChangesAsync();
+
+            if (result == 0) return BadRequest();
+
+            return Ok(paciente);
         }
 
         private bool PacienteExists(int id)

@@ -1,0 +1,51 @@
+﻿@page
+@model Consultas.Web.Pages.Pacientes.CreateModel
+
+<h1 class="mb-3">Cadastrar paciente</h1>
+
+<form method="post" class="form">
+    <div asp-validation-summary="ModelOnly"></div>
+
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label asp-for="Paciente.PrimeiroNome"></label>
+                <input asp-for="Paciente.PrimeiroNome"
+                       class="form-control" />
+                <span asp-validation-for="Paciente.PrimeiroNome"
+                      class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label asp-for="Paciente.Sobrenome"></label>
+                <input asp-for="Paciente.Sobrenome"
+                       class="form-control" />
+                <span asp-validation-for="Paciente.Sobrenome"
+                      class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label asp-for="Paciente.CPF"></label>
+                <input asp-for="Paciente.CPF"
+                       class="form-control"
+                       placeholder="12345678900" />
+                <span asp-validation-for="Paciente.CPF" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <input type="submit"
+               class="btn btn-primary"
+               value="Salvar" />
+        <a asp-page="/Pacientes/Index"
+           class="btn btn-secondary">
+            Cancelar
+        </a>
+    </div>
+</form>

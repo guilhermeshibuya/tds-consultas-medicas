@@ -1,0 +1,59 @@
+﻿@page
+@model Consultas.Web.Pages.Pacientes.IndexModel
+
+<h1 class="mb-3">Pacientes</h1>
+
+<a asp-page="/Pacientes/Create" class="btn btn-primary mb-3">
+    Cadastrar paciente
+</a>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead class="table-primary">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.PacienteList[0].Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PacienteList[0].PrimeiroNome)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PacienteList[0].CPF)
+                </th> 
+                <th>
+                    Opções
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var paciente in Model.PacienteList)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => paciente.Id)
+                    </td>
+                    <td>
+                        @($"{paciente.PrimeiroNome} {paciente.Sobrenome}")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => paciente.CPF)
+                    </td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@paciente.Id">
+                            <i class="bi bi-pencil"></i>
+                            <span>Editar</span>
+                        </a>
+                        <a asp-page="./Details" asp-route-id="@paciente.Id">
+                            <i class="bi bi-eye"></i>
+                            <span>Visualizar</span>
+                        </a>
+                        <a asp-page="./Delete" asp-route-id="@paciente.Id">
+                            <i class="bi bi-trash"></i>
+                            <span>Excluir</span>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

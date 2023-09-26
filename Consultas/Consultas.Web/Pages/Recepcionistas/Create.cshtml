@@ -1,0 +1,61 @@
+﻿@page
+@model Consultas.Web.Pages.Recepcionistas.CreateModel
+
+<h1 class="mb-3">Cadastrar recepcionista</h1>
+
+<form method="post" class="form">
+    <div asp-validation-summary="ModelOnly"></div>
+
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label asp-for="Recepcionista.PrimeiroNome"></label>
+                <input asp-for="Recepcionista.PrimeiroNome"
+                       class="form-control" />
+                <span asp-validation-for="Recepcionista.PrimeiroNome"
+                      class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label asp-for="Recepcionista.Sobrenome"></label>
+                <input asp-for="Recepcionista.Sobrenome"
+                       class="form-control" />
+                <span asp-validation-for="Recepcionista.Sobrenome"
+                      class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label asp-for="Recepcionista.CPF"></label>
+                <input asp-for="Recepcionista.CPF"
+                       class="form-control"
+                       placeholder="12345678900" />
+                <span asp-validation-for="Recepcionista.CPF" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label asp-for="Recepcionista.Telefone"></label>
+                <input asp-for="Recepcionista.Telefone"
+                       class="form-control"
+                       placeholder="6699999999" 
+                       type="tel"/>
+                <span asp-validation-for="Recepcionista.Telefone" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <input type="submit"
+               class="btn btn-primary"
+               value="Salvar" />
+        <a asp-page="/Recepcionistas/Index"
+           class="btn btn-secondary">
+            Cancelar
+        </a>
+    </div>
+</form>

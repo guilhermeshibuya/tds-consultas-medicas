@@ -1,0 +1,20 @@
+﻿@page "{id:int}"
+@model Consultas.Web.Pages.Pacientes.DetailsModel
+
+<h1 class="mb-3">Detalhes do paciente</h1>
+
+<div class="row">
+    <div class="col">
+        <p>
+            <strong>Nome:</strong>
+            @($"{Model.Paciente.PrimeiroNome} {Model.Paciente.Sobrenome}")
+        </p>
+
+    </div>
+    <div class="col">
+        <p>
+            <strong>Email:</strong>
+            @Model.Paciente.CPF
+        </p>
+    </div>
+</div>

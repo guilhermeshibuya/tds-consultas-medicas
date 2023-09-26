@@ -1,0 +1,32 @@
+﻿@page "{id:int}"
+@model Consultas.Web.Pages.Pacientes.DeleteModel
+
+<h1 class="mb-3">Detalhes do paciente para remover</h1>
+
+<div class="row">
+    <div class="col">
+        <p>
+            <strong>Nome:</strong>
+            @($"{Model.Paciente.PrimeiroNome} {Model.Paciente.Sobrenome}")
+        </p>
+
+    </div>
+    <div class="col">
+        <p>
+            <strong>Email:</strong>
+            @Model.Paciente.CPF
+        </p>
+    </div>
+</div>
+
+<form method="post" class="form">
+    <div class="form-group">
+        <input type="submit"
+               value="Excluir"
+               class="btn btn-danger" />
+        <a asp-page="/Pacientes/Index"
+           class="btn btn-secondary">
+            Voltar
+        </a>
+    </div>
+</form>
