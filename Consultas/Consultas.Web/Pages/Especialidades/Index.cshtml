@@ -1,0 +1,56 @@
+﻿@page
+@model Consultas.Web.Pages.Especialidades.IndexModel
+
+<h1 class="mb-3">Especialidade</h1>
+
+<a asp-page="/especialidades/Create" class="btn btn-primary mb-3">
+    Cadastrar uma Especialidade    
+</a>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead class="table-primary">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.EspecialidadeList[0].Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EspecialidadeList[0].Nome)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EspecialidadeList[0].Descricao)
+                </th>
+                <th>
+                    Opções
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var especialidade in Model.EspecialidadeList)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => especialidade.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => especialidade.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => especialidade.Descricao)
+                    </td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@especialidade.Id">
+                            Editar
+                        </a>
+                        <a asp-page="./Details" asp-route-id="@especialidade.Id">
+                            Visualizar
+                        </a>
+                        <a asp-page="./Delete" asp-route-id="@especialidade.Id">
+                            Remover
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
